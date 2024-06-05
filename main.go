@@ -130,7 +130,7 @@ func RunCommand(cmd *cobra.Command, args []string) {
 func readXmlFile() (err error) {
 	// Print absolute path
 	if filename, err := filepath.Abs(config.Filename); err == nil {
-		fmt.Println("Reading file: ", filename)
+		log.Println("Reading file: ", filename)
 	}
 
 	// Openfile
@@ -339,6 +339,7 @@ func parseTimeFromTestStatusElement(element *etree.Element, startTime time.Time,
 
 func createNewQaseRun() (runId int32, err error) {
 	// Create Test Run
+	log.Printf("Creating test run")
 	caseIds := make([]int64, 0)
 	for _, result := range testResults {
 		caseIds = append(caseIds, result.TestCaseId)
@@ -359,10 +360,12 @@ func createNewQaseRun() (runId int32, err error) {
 	}
 
 	runId = int32(qaseResp.Result.Id)
+	log.Printf("Created test run ID: %d", runId)
 	return
 }
 
 func createQaseTestRunResults(runId int32) (err error) {
+	log.Printf("Creating test run results for run ID: %d", runId)
 	qaseResults := make([]qase.ResultCreate, 0)
 	for _, result := range testResults {
 		qaseResult := qase.ResultCreate{
@@ -405,6 +408,7 @@ func createQaseTestRunResults(runId int32) (err error) {
 
 func completeQaseRun(runId int32) (err error) {
 	// Complete Test Run
+	log.Printf("Completing test run ID: %d", runId)
 	qaseResp, httpResp, err := qaseClient.RunsApi.CompleteRun(
 		ctx,
 		config.QaseProject,
@@ -424,6 +428,6 @@ func completeQaseRun(runId int32) (err error) {
 		err = fmt.Errorf("failed to complete test run, status false")
 		return
 	}
-
+	log.Printf("Completed test run ID: %d", runId)
 	return nil
 }
