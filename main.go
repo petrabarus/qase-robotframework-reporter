@@ -68,8 +68,8 @@ func init() {
 	cobra.OnInitialize()
 
 	cmd.Flags().StringP("project", "p", "", "Qase project name")
-	cmd.Flags().StringP("api_token", "t", "", "Qase API token")
-	cmd.Flags().StringP("run_title", "r", "", "Qase run title")
+	cmd.Flags().StringP("api-token", "t", "", "Qase API token")
+	cmd.Flags().StringP("run-title", "r", "", "Qase run title")
 
 	viper.BindPFlag("project", cmd.Flags().Lookup("project"))
 	viper.BindPFlag("api_token", cmd.Flags().Lookup("api-token"))
