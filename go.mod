@@ -1,6 +1,6 @@
 module github.com/petrabarus/qase-robotframework-reporter
 
-go 1.21.0
+go 1.19.0
 
 require (
 	github.com/beevik/etree v1.4.0
